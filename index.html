@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			ul,body{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				width: 450px;
+				height: 70px;
+				background: #ccc;
+			}
+			li{
+				list-style: none;
+				width: 50px;
+				height: 50px;
+				border-radius:50% ;
+				float: left;
+				border: 2px solid #000;
+				margin: 10px;
+			}
+			div{
+				width: 70px;
+				height: 40px;
+				background: red;
+				font:16px/40px "微软雅黑";
+				color:#fff;
+				text-align: center;
+				position: absolute;
+				left: 800px;
+				top: 50px;
+				border-radius: 10px;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+				<div>
+				
+				</div>
+		<script>
+			var ali = document.getElementsByTagName('li');
+			var odiv = document.getElementsByTagName("div")[0];
+			var len =ali.length;
+			var arr =["很差","一般","不错","推荐","力推"]
+			var n;
+			       //鼠标移入
+			for (var i=0;i<len;i++) {
+				ali[i].index=i;
+				ali[i].on=true;
+				ali[i].onmouseover = function(){
+					for (var i=0;i<len; i++) {
+						ali[i].style.background="";
+					}
+					odiv.style.display="block";
+					odiv.innerHTML=arr[this.index];
+					var index= this.index;
+					for (var i=0;i<=index;i++) {
+						if(index<2){
+							ali[i].style.background="yellow";
+						}else {
+							ali[i].style.background="red";
+						}
+					}
+				}
+				ali[i].onclick = function(){
+					n=this.index;
+					for (var i=0;i<len;i++) {
+						ali[i].on=true;
+					}
+					this.on=false;
+				}
+				ali[i].onmouseout =function(){
+					if(ali[0].on&&ali[1].on&&ali[2].on&&ali[3].on&&ali[4].on){
+				odiv.style.display="none";		
+					}
+					//本次没有点击
+					if(this.on){
+						for(var i=0;i<len; i++){
+							ali[i].style.background="";
+							if(!ali[i].on){
+								for (var i=0;i<len; i++) {
+									ali[i].style.background="";
+								}
+								for (var i=0;i<=n;i++) {
+									odiv.innerHTML=arr[n];
+									if(n<2){
+										ali[i].style.background="yellow";
+									}else{
+										ali[i].style.background="red";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		</script>
+
+	</body>
+</html>
+					<!--1.鼠标移入前两个为灰色，后三个为黄色
+						2.鼠标移开，如果没点击就清空
+						3.再次点击或移入，
+								如果没有再次点击就移开，显示上次点击之后的样式
+								(判断上次是否点击：所有的开关如果有任意一个为关就点击了)
+								上次每点击就清空
+								上次点击了：给上一次记录值(n=this.index)之前的上背景颜色
+								如果再次点击了则显示新的样式(ok)-->
